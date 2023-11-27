@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobsity-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobsity-app
+  template:
+    metadata:
+      labels:
+        app: jobsity-app
+    spec:
+      containers:
+      - name: jobsity-app
+        image: jobsity-app:latest
+        ports:
+        - containerPort: 5000
+        env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: jobsity-app-config
+                key: db_host
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: jobsity-app-config
+                key: db_port
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: jobsity-app-config
+                key: db_name
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: jobsity-app-secret
+                key: db_user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jobsity-app-secret
+                key: db_password
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jobsity-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector:
+    app: jobsity-app

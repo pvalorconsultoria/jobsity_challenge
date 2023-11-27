@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jobsity-app-config
+data:
+  db_host: "127.0.0.1"
+  db_port: "3306"
+  db_name: "jobsity_db"
