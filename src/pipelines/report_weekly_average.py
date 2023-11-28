@@ -40,7 +40,7 @@ def main():
     df_bouding_boxes = df_bouding_boxes.withColumnRenamed("id", "bounding_box_id")
     df_bouding_boxes_broadcast = broadcast(df_bouding_boxes)
 
-    df_with_bbox = df.join(df_bouding_boxes, 
+    df_with_bbox = df.join(df_bouding_boxes_broadcast, 
                             (col("origin_x") >= col("x_min")) & 
                             (col("origin_x") <= col("x_max")) & 
                             (col("origin_y") >= col("y_min")) & 

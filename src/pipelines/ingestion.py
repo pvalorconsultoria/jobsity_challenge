@@ -2,7 +2,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, current_date, date_format
 
 if __name__ == "__main__":
-    # Criar uma SparkSession (ponto de entrada para funcionalidades do Spark)
     spark = SparkSession.builder \
         .appName("JobSity - Ingestion") \
         .config("spark.jars", "C:\\jars\\mysql-connector-j-8.1.0.jar") \
